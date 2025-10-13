@@ -6,4 +6,4 @@ COLLECTION_NAME = "url_collection"
 
 client = MongoClient(URI)
 db = client[DB_NAME]
-collection = db[COLLECTION_NAME]
+url_collection = db[COLLECTION_NAME]
