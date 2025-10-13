@@ -1,0 +1,9 @@
+from pymongo import MongoClient
+
+URI = "mongodb://localhost:27017"
+DB_NAME = "url_database"
+COLLECTION_NAME = "url_collection"
+
+client = MongoClient(URI)
+db = client[DB_NAME]
+collection = db[COLLECTION_NAME]
