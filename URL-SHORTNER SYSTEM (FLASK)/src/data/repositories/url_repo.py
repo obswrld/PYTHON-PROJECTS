@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from config.config import url_collection
 from src.config.config import url_collection
 from src.data.model.url import Url
@@ -45,3 +47,28 @@ class UrlRepository:
         except PyMongoError as e:
             print(f"Error finding url: {e}")
             return None
+
+    def delete_by_shortened_url(self, shortened_url: str) -> Url:
+        try:
+            result = self.collection.delete_one({"shortened_url": shortened_url})
+            return result.deleted_count > 0
+        except PyMongoError as e:
+            print(f"Error deleting url: {e}")
+            return False
+
+    def delete_by_original_url(self, original_url: str) -> Url:
+        try:
+            result = self.collection.delete_one({"original_url": original_url})
+            return result.deleted_count > 0
+        except PyMongoError as e:
+            print(f"Error deleting url: {e}")
+            return False
+
+    def delete_by_expires_at(self) -> int:
+        try:
+            expired_date = datetime.now()
+            result = self.collection.delete_many({"expires_at": expired_date})
+            return result.deleted_count
+        except PyMongoError as e:
+            print(f"Error deleting url: {e}")
+            return False
