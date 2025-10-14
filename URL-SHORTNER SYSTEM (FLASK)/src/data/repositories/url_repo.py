@@ -1,6 +1,4 @@
 from datetime import datetime, timedelta
-
-from config.config import url_collection
 from src.config.config import url_collection
 from src.data.model.url import Url
 from pymongo.errors import PyMongoError
