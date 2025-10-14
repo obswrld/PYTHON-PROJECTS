@@ -19,3 +19,27 @@ class UrlService:
         url = Url(original_url=original_url, short_url=short_url)
         self.url_repository.save(url)
         return UrlMapper.to_dict(url)
+
+    @staticmethod
+    def get_by_short_url(self, short_url: str):
+        short_url = self.url_repository.find_by_short_url(short_url)
+        if short_url:
+            return UrlMapper.to_dict(short_url)
+        else:
+            return None
+
+    @staticmethod
+    def get_by_original_url(self, original_url: str):
+        short_url = self.url_repository.find_by_original_url(original_url)
+        if short_url:
+            return UrlMapper.to_dict(short_url)
+        else:
+            return None
+
+    @staticmethod
+    def delete_by_short_url(self, short_url: str):
+        short_url = self.url_repository.delete_by_short_url(short_url)
+
+    @staticmethod
+    def clean_expired_url(self):
+        return self.url_repository.delete_url_expired_url()
