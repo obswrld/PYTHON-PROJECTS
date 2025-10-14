@@ -15,3 +15,33 @@ class UrlRepository:
         except PyMongoError as e:
             print(f"Error saving url: {e}")
         return None
+
+    def find_by_shortened_url(self, shortened_url: str) -> Url:
+        try:
+            result = self.collection.find_one({"shortened_url": shortened_url})
+            if result:
+                return Url(url_id=result["_id"],
+                           shortened_url=result["shortened_url"],
+                           original_url=result["original_url"],
+                           created_at=result["created_at"],
+                           expires_at=result["expires_at"]
+                           )
+            return None
+        except PyMongoError as e:
+            print(f"Error finding url: {e}")
+            return None
+
+    def find_by_original_url(self, original_url: str) -> Url:
+        try:
+            result = self.collection.find_one({"original_url": original_url})
+            if result:
+                return Url(url_id=result["_id"],
+                           original_url=result["original_url"],
+                           shortened_url=result["shortened_url"],
+                           created_at=result["created_at"],
+                           expires_at=result["expires_at"]
+                           )
+            return None
+        except PyMongoError as e:
+            print(f"Error finding url: {e}")
+            return None
