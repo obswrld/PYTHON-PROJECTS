@@ -1,20 +1,21 @@
+import os
+
 from flask import Flask
 from dotenv import load_dotenv
-from src.main import main
-from src.auth import auth
+from src.main.main import main
+from src.auth.auth import auth
 
 load_dotenv()
 
 def create_app():
-    apps = Flask(__name__)
+    app = Flask(__name__, template_folder='templates')
 
-    apps.register_blueprint(main)
+    app.register_blueprint(main)
 
-    apps.register_blueprint(auth)
+    app.register_blueprint(auth)
 
-    return apps
+    return app
 
 if __name__ == '__main__':
-    app = create_app()
-    app.run()
-    app.run(debug=False)
+    apps = create_app()
+    apps.run(debug=True)
